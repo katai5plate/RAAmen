@@ -30,9 +30,13 @@
       const {
         interval, cooldown, isFrozen, lastRequest, freezingStart, errors,
       } = this;
-      const error = () => console.error(
-        `${errors.API_CALL_LIMIT_EXCEEDED}: ${(cooldown - (now - freezingStart)) / 1000} sec left`,
-      );
+      const error = () => {
+        const diff = (cooldown - (now - freezingStart));
+        const left = (diff <= 0 ? cooldown : diff) / 1000;
+        console.error(
+          `${errors.API_CALL_LIMIT_EXCEEDED}: ${left} sec left`,
+        );
+      };
       if (!isFrozen && now - lastRequest < interval) {
         this.isFrozen = true;
         this.freezingStart = now;
