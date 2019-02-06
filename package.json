@@ -1,5 +1,5 @@
 {
-  "name": "RAA_mock",
+  "name": "raa_mock",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/katai5plate/RAA_mock",
@@ -19,5 +19,6 @@
   ],
   "scripts": {
     "build": "babel src -d dist"
-  }
+  },
+  "dependencies": {}
 }
