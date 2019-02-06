@@ -18,6 +18,8 @@
     isFrozen: false,
     lastRequest: new Date(0),
     freezingStart: new Date(0),
+    falseCount: 0,
+    falseMax: 3,
     errors: {
       BAD_REQUEST: 'BAD_REQUEST',
       UNAUTHORIZED: 'UNAUTHORIZED',
@@ -28,7 +30,7 @@
     send(method) {
       const now = new Date();
       const {
-        interval, cooldown, isFrozen, lastRequest, freezingStart, errors,
+        interval, cooldown, isFrozen, lastRequest, freezingStart, errors, falseCount, falseMax,
       } = this;
       const error = () => {
         const diff = (cooldown - (now - freezingStart));
@@ -38,10 +40,14 @@
         );
       };
       if (!isFrozen && now - lastRequest < interval) {
-        this.isFrozen = true;
-        this.freezingStart = now;
-        error();
-        return;
+        if (falseCount >= falseMax) {
+          this.isFrozen = true;
+          this.freezingStart = now;
+          error();
+          return;
+        }
+        console.warn(`Too early! : ${falseMax - falseCount} left`);
+        this.falseCount += 1;
       }
       if (isFrozen) {
         if (now - freezingStart < cooldown) {
@@ -49,6 +55,7 @@
           return;
         }
         this.isFrozen = false;
+        this.falseCount = 0;
       }
       console.info('REQUEST_SUCCEEDED');
       this.lastRequest = now;
