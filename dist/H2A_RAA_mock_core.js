@@ -36,7 +36,9 @@
           errors = this.errors;
 
       var error = function error() {
-        return console.error("".concat(errors.API_CALL_LIMIT_EXCEEDED, ": ").concat((cooldown - (now - freezingStart)) / 1000, " sec left"));
+        var diff = cooldown - (now - freezingStart);
+        var left = (diff <= 0 ? cooldown : diff) / 1000;
+        console.error("".concat(errors.API_CALL_LIMIT_EXCEEDED, ": ").concat(left, " sec left"));
       };
 
       if (!isFrozen && now - lastRequest < interval) {
