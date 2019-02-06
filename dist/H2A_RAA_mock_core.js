@@ -15,12 +15,21 @@
 (function () {
   window.RAA = {
     interval: 5000,
+    // 何 ms に一度の通信を推奨するか
     cooldown: 60000,
+    // 規制する時間
     isFrozen: false,
+    // 規制中
     lastRequest: new Date(0),
+    // 最終リクエスト
     freezingStart: new Date(0),
+    // 凍結開始時間
     falseCount: 0,
+    // 推奨する通信頻度を破った回数
     falseMax: 3,
+    // 許容する通信頻度違反回数
+    severeFalse: false,
+    // 通信頻度を守っても falseCount をリセットしない
     errors: {
       BAD_REQUEST: 'BAD_REQUEST',
       UNAUTHORIZED: 'UNAUTHORIZED',
@@ -37,7 +46,8 @@
           freezingStart = this.freezingStart,
           errors = this.errors,
           falseCount = this.falseCount,
-          falseMax = this.falseMax;
+          falseMax = this.falseMax,
+          severeFalse = this.severeFalse;
 
       var error = function error() {
         var diff = cooldown - (now - freezingStart);
@@ -69,6 +79,7 @@
 
       console.info('REQUEST_SUCCEEDED');
       this.lastRequest = now;
+      if (falseCount !== 0 && !severeFalse) this.falseCount = 0;
       method();
     }
   };
