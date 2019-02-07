@@ -18,7 +18,7 @@
     this.message = message;
   };
 
-  const constants = {
+  const params = {
     // アツマールAPIが存在しなければモック化する
     isEnable: !window.RPGAtsumaru,
     // 意図的にサーバーダウンを再現するか
@@ -71,7 +71,7 @@
           (resolve) => {
             setTimeout(() => {
               resolve('default.png');
-            }, constants.responseTime.normal);
+            }, params.responseTime.normal);
           },
         ),
       },
@@ -100,47 +100,48 @@
   };
 
   const methods = {
-    send(doit) {
+    check() {
       const now = new Date();
       const {
         interval, cooldown,
         isFrozen, lastRequest, freezingStart,
-        errors,
         falseCount, falseMax, severeFalse,
       } = this;
       const error = () => {
         const diff = (cooldown - (now - freezingStart));
         const left = (diff <= 0 ? cooldown : diff) / 1000;
+        const e = collections.errors.API_CALL_LIMIT_EXCEEDED;
         console.error(
-          `${errors.API_CALL_LIMIT_EXCEEDED}: ${left} sec left`,
+          `${e.code}: ${left} sec left`,
         );
+        return e;
       };
       if (!isFrozen && now - lastRequest < interval) {
         if (falseCount >= falseMax) {
           this.isFrozen = true;
           this.freezingStart = now;
-          error();
-          return;
+          return { result: false, error: error() };
         }
         console.warn(`Too early! : ${falseMax - falseCount} left`);
         this.falseCount += 1;
       }
       if (isFrozen) {
         if (now - freezingStart < cooldown) {
-          error();
-          return;
+          return { result: false, error: error() };
         }
         this.isFrozen = false;
         this.falseCount = 0;
       }
       console.info('REQUEST_SUCCEEDED');
       this.lastRequest = now;
-      if (falseCount !== 0 && !severeFalse) this.falseCount = 0;
-      doit();
+      if (falseCount !== 0 && !severeFalse && now - lastRequest > interval) {
+        this.falseCount = 0;
+      }
+      return { result: true };
     },
     async request({
       // レスポンスが返ってくる時間
-      waitTime = constants.responseTime.normal,
+      waitTime = params.responseTime.normal,
       // 送信するデータ
       post = {},
       // 第一引数をpostとして、falseだとエラー
@@ -153,6 +154,10 @@
       return new Promise(
         (resolve, reject) => {
           setTimeout(() => {
+            const { result: statResult, error } = this.check();
+            if (statResult === false) {
+              reject(error);
+            }
             if (checkValid(post) === false) {
               reject(failed);
             }
@@ -179,91 +184,74 @@
     },
   };
 
-  window.RAA = { ...constants, ...methods, ...collections };
-
-  const nothing = () => { };
+  window.RAA = { ...params, ...methods, ...collections };
 
   window.RPGAtsumaru = {
     comment: {
-      changeScene: () => window.RAA.send(nothing),
-      resetAndChangeScene: () => window.RAA.send(nothing),
-      pushContextFactor: () => window.RAA.send(nothing),
-      pushMinorContext: () => window.RAA.send(nothing),
-      setContext: () => window.RAA.send(nothing),
+      changeScene: () => window.RAA.check(),
+      resetAndChangeScene: () => window.RAA.check(),
+      pushContextFactor: () => window.RAA.check(),
+      pushMinorContext: () => window.RAA.check(),
+      setContext: () => window.RAA.check(),
       cameOut: {
-        subscribe: () => window.RAA.send(nothing),
+        subscribe: () => window.RAA.check(),
       },
       posted: {
-        subscribe: () => window.RAA.send(nothing),
+        subscribe: () => window.RAA.check(),
       },
-      verbose: () => window.RAA.send(nothing),
+      verbose: () => window.RAA.check(),
     },
     controllers: {
       defaultController: {
-        subscribe: () => window.RAA.send(nothing),
+        subscribe: () => window.RAA.check(),
       },
     },
     storage: {
-      getItems: () => window.RAA.send(nothing),
-      setItems: () => window.RAA.send(nothing),
-      removeItem: () => window.RAA.send(nothing),
+      getItems: () => window.RAA.check(),
+      setItems: () => window.RAA.check(),
+      removeItem: () => window.RAA.check(),
     },
     volume: {
-      getCurrentValue: () => window.RAA.send(nothing),
+      getCurrentValue: () => window.RAA.check(),
       changed: {
-        subscribe: () => window.RAA.send(nothing),
+        subscribe: () => window.RAA.check(),
       },
     },
     popups: {
-      openLink: () => window.RAA.send(nothing),
+      openLink: () => window.RAA.check(),
     },
     experimental: {
       query: [],
       popups: {
-        displayCreatorInformationModal: () => window.RAA.send(nothing),
+        displayCreatorInformationModal: () => window.RAA.check(),
       },
       scoreboards: {
-        setRecord: () => window.RAA.send(nothing),
-        display: () => window.RAA.send(nothing),
-        getRecords: () => window.RAA.send(nothing),
+        setRecord: () => window.RAA.check(),
+        display: () => window.RAA.check(),
+        getRecords: () => window.RAA.check(),
       },
       screenshot: {
-        displayModal: () => window.RAA.send(nothing),
-        setScreenshotHandler: () => window.RAA.send(nothing),
+        displayModal: () => window.RAA.check(),
+        setScreenshotHandler: () => window.RAA.check(),
       },
       globalServerVariable: {
-        getGlobalServerVariable: () => window.RAA.send(nothing),
-        triggerCall: () => window.RAA.send(nothing),
+        getGlobalServerVariable: () => window.RAA.check(),
+        triggerCall: () => window.RAA.check(),
       },
       storage: {
-        getSharedItems: () => window.RAA.send(nothing),
+        getSharedItems: () => window.RAA.check(),
       },
       user: {
-        getSelfInformation: () => window.RAA.send(nothing),
-        getUserInformation: () => window.RAA.send(nothing),
-        getRecentUsers: () => window.RAA.send(nothing),
+        getSelfInformation: () => window.RAA.check(),
+        getUserInformation: () => window.RAA.check(),
+        getRecentUsers: () => window.RAA.check(),
       },
       signal: {
-        sendSignalToGlobal: () => window.RAA.send(nothing),
-        getGlobalSignals: () => window.RAA.send(nothing),
-        sendSignalToUser: () => window.RAA.send(nothing),
-        getUserSignals: () => window.RAA.send(nothing),
+        sendSignalToGlobal: () => window.RAA.check(),
+        getGlobalSignals: () => window.RAA.check(),
+        sendSignalToUser: () => window.RAA.check(),
+        getUserSignals: () => window.RAA.check(),
       },
     },
   };
 })();
-
-const { RAA } = window;
-
-window.RPGAtsumaru.experimental.screenshot
-  .displayModal = async () => {
-    const openModal = async (src) => {
-      await RAA.modal({
-        message: src,
-        decorate: s => `<img src="${s}" />`,
-      });
-    };
-    RAA.state.screenshot.handler
-      .then(r => openModal(r))
-      .catch(e => console.error(e));
-  };
