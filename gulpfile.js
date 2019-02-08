@@ -2,10 +2,16 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const minify = require('gulp-babel-minify');
 const header = require('gulp-header');
+const rename = require('gulp-rename');
 
 const LICENCE = require('./template/licence.js');
 
 gulp.task('build', () => gulp.src('./src/*.js')
+  .pipe(babel())
+  .pipe(header(LICENCE))
+  .pipe(gulp.dest('./dist')));
+
+gulp.task('build_min', () => gulp.src('./src/*.js')
   .pipe(babel())
   .pipe(minify(
     {
@@ -25,4 +31,7 @@ gulp.task('build', () => gulp.src('./src/*.js')
     },
   ))
   .pipe(header(LICENCE))
+  .pipe(rename({
+    suffix: '-min',
+  }))
   .pipe(gulp.dest('./dist')));
