@@ -17,7 +17,7 @@ https://github.com/katai5plate/RAA_mock/tree/master/dist
 |result|boolean|正常なレスポンスか|
 |(error)|RAA.errors|(result が false のとき)エラー内容|
 
-### RAA.request({?waitTime, ?post, ?checkValid, ?succeeded, ?feiled})　=> Promise\<any\>
+### RAA.request({?waitTime, ?post, ?checkValid, ?succeeded, ?feiled}) => Promise\<any\>
 - 疑似サーバーにリクエストを送信します
 
 |引数|型|初期値|説明|
