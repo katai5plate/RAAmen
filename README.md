@@ -1,4 +1,4 @@
-# RAA_mock :ramen:
+# RAAmen :ramen:
 **R**PG **A**tsumaru **A**PI **M**ock-up **E**ngine / RPGアツマールAPIのモックプラグイン
 
 ## ダウンロード
