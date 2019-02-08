@@ -1,5 +1,5 @@
 # RAA_mock
-RPG Atsumaru API Mock / RPGアツマールAPIのモックプラグイン
+**R**PG **A**tsumaru **A**PI **M**ock-up **E**ngine / RPGアツマールAPIのモックプラグイン
 
 ## ダウンロード
 https://github.com/katai5plate/RAA_mock/tree/master/dist
