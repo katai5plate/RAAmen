@@ -38,6 +38,6 @@ https://github.com/katai5plate/RAA_mock/tree/master/dist
 |引数|型|初期値|説明|
 |-|-|-|-|
 |message|number|(required)|レスポンスが返ってくる時間|
-|decorate|message => string|arg => arg|第一引数をmesaageとして、リクエスト成功時に適用する文字列を返す|
+|decorate|message => string|arg => arg|第一引数をmesaageとして、<br>リクエスト成功時に適用する文字列を返す|
 |checkValid|message => boolean|arg => !!arg|第一引数をmesaageとして、成否を返す|
 
