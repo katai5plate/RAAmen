@@ -3,7 +3,7 @@
 
 ## ダウンロード
 https://github.com/katai5plate/RAAmen/tree/master/dist
-- `-min` がついているものは、圧縮されたものです。
+- `-min` がついているものは、軽量化されたものです。
 
 ## 使い方
 1. プラグイン設定画面で、`RAAmen_core.js`の下に他の`RAAmen_add_**.js`が来るように設定し、`ON`にします
