@@ -150,6 +150,8 @@
       succeeded = {},
       // 失敗時のレスポンス
       failed = collections.errors.BAD_REQUEST,
+      // RAA.check()を行わないか
+      noCheck = false,
     }) {
       return new Promise(
         (resolve, reject) => {
@@ -158,7 +160,7 @@
             if (statResult === false) {
               reject(error);
             }
-            if (checkValid(post) === false) {
+            if (!noCheck && checkValid(post) === false) {
               reject(failed);
             }
             resolve(succeeded);
