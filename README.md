@@ -22,11 +22,11 @@ https://github.com/katai5plate/RAA_mock/tree/master/dist
 
 |引数|型|初期値|説明|
 |-|-|-|-|
-|waitTime|number|RAA.responseTime.normal|レスポンスが返ってくる時間|
-|post|any|{}|送信するデータ|
-|checkValid|post => boolean|arg => !!arg|第一引数をpostとして、成否を返す|
-|succeeded|any|{}|成功時のレスポンス内容|
-|feiled|any|RAA.errors.BAD_REQUEST|失敗時のレスポンス内容|
+|(waitTime)|number|RAA.responseTime.normal|レスポンスが返ってくる時間|
+|(post)|any|{}|送信するデータ|
+|(checkValid)|post => boolean|arg => !!arg|第一引数をpostとして、成否を返す|
+|(succeeded)|any|{}|成功時のレスポンス内容|
+|(feiled)|any|RAA.errors.BAD_REQUEST|失敗時のレスポンス内容|
 
 |返り値|型|説明|
 |-|-|-|
@@ -37,7 +37,7 @@ https://github.com/katai5plate/RAA_mock/tree/master/dist
 
 |引数|型|初期値|説明|
 |-|-|-|-|
-|message|number|(required)|レスポンスが返ってくる時間|
-|decorate|message => string|arg => arg|第一引数をmesaageとして、<br>リクエスト成功時に適用する文字列を返す|
-|checkValid|message => boolean|arg => !!arg|第一引数をmesaageとして、成否を返す|
+|message|number||レスポンスが返ってくる時間|
+|(decorate)|message => string|arg => arg|第一引数をmesaageとして、<br>リクエスト成功時に適用する文字列を返す|
+|(checkValid)|message => boolean|arg => !!arg|第一引数をmesaageとして、成否を返す|
 
