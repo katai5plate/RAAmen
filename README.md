@@ -17,8 +17,9 @@ https://github.com/katai5plate/RAA_mock/tree/master/dist
 |result|boolean|正常なレスポンスか|
 |(error)|RAA.errors|(result が false のとき)エラー内容|
 
-### RAA.request({?waitTime, ?post, ?checkValid, ?succeeded, ?feiled}) => Promise\<any\>
-- 疑似サーバーにリクエストを送信します
+### RAA.request({?waitTime, ?post, ?checkValid, ?succeeded, ?feiled, ?noCheck}) => Promise\<any\>
+- 疑似サーバーにリクエストを送信します。
+- 時間・成功時処理・失敗時処理のあるPromiseを生成します。
 
 |引数|型|初期値|説明|
 |-|-|-|-|
@@ -27,17 +28,19 @@ https://github.com/katai5plate/RAA_mock/tree/master/dist
 |(checkValid)|post => boolean|arg => !!arg|第一引数をpostとして、成否を返す|
 |(succeeded)|any|{}|成功時のレスポンス内容|
 |(feiled)|any|RAA.errors.BAD_REQUEST|失敗時のレスポンス内容|
+|(noCheck)|boolean|false|(未実装)RAA.check()を行わない|
 
 |返り値|型|説明|
 |-|-|-|
 ||Promise\<any\>|処理状態|
 
 ### RAA.modal({ message, ?decorate, ?checkValid }) => void
-- 疑似サーバーにモーダルを開くリクエストを送信します
+- 疑似サーバーにモーダルを開くリクエストを送信します。
+- `message`が疑似サーバーにPOSTされ、`checkValid`が`true`の時、`decorate`の出力結果が適用されます。
 
 |引数|型|初期値|説明|
 |-|-|-|-|
-|message|number||レスポンスが返ってくる時間|
+|message|number||送信する文字列|
 |(decorate)|message => string|arg => arg|第一引数をmesaageとして、<br>リクエスト成功時に適用する文字列を返す|
 |(checkValid)|message => boolean|arg => !!arg|第一引数をmesaageとして、成否を返す|
 
