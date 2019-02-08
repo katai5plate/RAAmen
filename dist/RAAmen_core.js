@@ -233,72 +233,75 @@
     ...methods,
     ...collections
   };
-  window.RPGAtsumaru = {
-    comment: {
-      changeScene: () => window.RAA.check(),
-      resetAndChangeScene: () => window.RAA.check(),
-      pushContextFactor: () => window.RAA.check(),
-      pushMinorContext: () => window.RAA.check(),
-      setContext: () => window.RAA.check(),
-      cameOut: {
-        subscribe: () => window.RAA.check()
+
+  if (!window.RPGAtsumaru) {
+    window.RPGAtsumaru = {
+      comment: {
+        changeScene: () => window.RAA.check(),
+        resetAndChangeScene: () => window.RAA.check(),
+        pushContextFactor: () => window.RAA.check(),
+        pushMinorContext: () => window.RAA.check(),
+        setContext: () => window.RAA.check(),
+        cameOut: {
+          subscribe: () => window.RAA.check()
+        },
+        posted: {
+          subscribe: () => window.RAA.check()
+        },
+        verbose: () => window.RAA.check()
       },
-      posted: {
-        subscribe: () => window.RAA.check()
-      },
-      verbose: () => window.RAA.check()
-    },
-    controllers: {
-      defaultController: {
-        subscribe: () => window.RAA.check()
-      }
-    },
-    storage: {
-      getItems: () => window.RAA.check(),
-      setItems: () => window.RAA.check(),
-      removeItem: () => window.RAA.check()
-    },
-    volume: {
-      getCurrentValue: () => window.RAA.check(),
-      changed: {
-        subscribe: () => window.RAA.check()
-      }
-    },
-    popups: {
-      openLink: () => window.RAA.check()
-    },
-    experimental: {
-      query: [],
-      popups: {
-        displayCreatorInformationModal: () => window.RAA.check()
-      },
-      scoreboards: {
-        setRecord: () => window.RAA.check(),
-        display: () => window.RAA.check(),
-        getRecords: () => window.RAA.check()
-      },
-      screenshot: {
-        displayModal: () => window.RAA.check(),
-        setScreenshotHandler: () => window.RAA.check()
-      },
-      globalServerVariable: {
-        getGlobalServerVariable: () => window.RAA.check(),
-        triggerCall: () => window.RAA.check()
+      controllers: {
+        defaultController: {
+          subscribe: () => window.RAA.check()
+        }
       },
       storage: {
-        getSharedItems: () => window.RAA.check()
+        getItems: () => window.RAA.check(),
+        setItems: () => window.RAA.check(),
+        removeItem: () => window.RAA.check()
       },
-      user: {
-        getSelfInformation: () => window.RAA.check(),
-        getUserInformation: () => window.RAA.check(),
-        getRecentUsers: () => window.RAA.check()
+      volume: {
+        getCurrentValue: () => window.RAA.check(),
+        changed: {
+          subscribe: () => window.RAA.check()
+        }
       },
-      signal: {
-        sendSignalToGlobal: () => window.RAA.check(),
-        getGlobalSignals: () => window.RAA.check(),
-        sendSignalToUser: () => window.RAA.check(),
-        getUserSignals: () => window.RAA.check()
+      popups: {
+        openLink: () => window.RAA.check()
+      },
+      experimental: {
+        query: [],
+        popups: {
+          displayCreatorInformationModal: () => window.RAA.check()
+        },
+        scoreboards: {
+          setRecord: () => window.RAA.check(),
+          display: () => window.RAA.check(),
+          getRecords: () => window.RAA.check()
+        },
+        screenshot: {
+          displayModal: () => window.RAA.check(),
+          setScreenshotHandler: () => window.RAA.check()
+        },
+        globalServerVariable: {
+          getGlobalServerVariable: () => window.RAA.check(),
+          triggerCall: () => window.RAA.check()
+        },
+        storage: {
+          getSharedItems: () => window.RAA.check()
+        },
+        user: {
+          getSelfInformation: () => window.RAA.check(),
+          getUserInformation: () => window.RAA.check(),
+          getRecentUsers: () => window.RAA.check()
+        },
+        signal: {
+          sendSignalToGlobal: () => window.RAA.check(),
+          getGlobalSignals: () => window.RAA.check(),
+          sendSignalToUser: () => window.RAA.check(),
+          getUserSignals: () => window.RAA.check()
+        }
       }
-    }
-  };
+    };
+  }
 })();

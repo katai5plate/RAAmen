@@ -23,34 +23,39 @@
  */
 (() => {
   const {
-    RAA,
-    RPGAtsumaru
+    RAA
   } = window;
-  const {
-    experimental
-  } = RPGAtsumaru;
-  const {
-    screenshot
-  } = experimental;
 
-  screenshot.displayModal = async () => {
-    const openModal = async src => {
-      await RAA.modal({
-        message: src,
-        decorate: s => `<img src="${s}" />`
-      });
+  if (RAA.isEnable) {
+    const {
+      RPGAtsumaru
+    } = window;
+    const {
+      experimental
+    } = RPGAtsumaru;
+    const {
+      screenshot
+    } = experimental;
+
+    screenshot.displayModal = async () => {
+      const openModal = async src => {
+        await RAA.modal({
+          message: src,
+          decorate: s => `<img src="${s}" />`
+        });
+      };
+
+      RAA.state.screenshot.handler.then(r => openModal(r)).catch(e => console.error(e));
     };
 
-    RAA.state.screenshot.handler.then(r => openModal(r)).catch(e => console.error(e));
-  };
-
-  screenshot.setScreenshotHandler = async promise => {
-    await RAA.request({
-      waitTime: RAA.responseTime.normal,
-      post: promise,
-      checkValid: p => p instanceof Promise
-    }).then(() => {
-      RAA.state.screenshot.handler = promise;
-    }).catch(e => console.error(e));
-  };
+    screenshot.setScreenshotHandler = async promise => {
+      await RAA.request({
+        waitTime: RAA.responseTime.normal,
+        post: promise,
+        checkValid: p => p instanceof Promise
+      }).then(() => {
+        RAA.state.screenshot.handler = promise;
+      }).catch(e => console.error(e));
+    };
+  }
 })();
