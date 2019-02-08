@@ -22,7 +22,8 @@
     "dist/**/*.js"
   ],
   "scripts": {
-    "build": "gulp build build_min"
+    "build": "gulp build build_min",
+    "test": "jest"
   },
   "dependencies": {}
 }
