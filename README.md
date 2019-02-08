@@ -1,5 +1,5 @@
 # RAAmen :ramen:
-**R**PG **A**tsumaru **A**PI **M**ock-up **E**ngine / RPGアツマールAPIのモックプラグイン
+**R**PG **A**tsumaru **A**PI **M**ock-up **EN**gine / RPGアツマールAPIのモックプラグイン
 
 ## ダウンロード
 https://github.com/katai5plate/RAA_mock/tree/master/dist
