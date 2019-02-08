@@ -1,11 +1,11 @@
-# RAA_mock
-RPG Atsumaru API Mock / RPGアツマールAPIのモックプラグイン
+# RAAmen :ramen:
+**R**PG **A**tsumaru **A**PI **M**ock-up **E**ngine / RPGアツマールAPIのモックプラグイン
 
 ## ダウンロード
 https://github.com/katai5plate/RAA_mock/tree/master/dist
 
 ## 使い方
-1. プラグイン設定画面で、`H2A_RAA_core.js`の下に他の`H2A_RAA_**.js`が来るように設定し、`ON`にします
+1. プラグイン設定画面で、`RAAmen_core.js`の下に他の`RAAmen_add_**.js`が来るように設定し、`ON`にします
 2. テストプレイ時に`F8`キーを押してデバッグコンソールを開き、`console.log(!!RAA&&!!RPGAtsumaru);`を入力し`true`が表示されたら導入成功です。
 
 ## リファレンス

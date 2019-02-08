@@ -14,13 +14,14 @@
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-babel-minify": "^0.5.0",
-    "gulp-header": "^2.0.7"
+    "gulp-header": "^2.0.7",
+    "gulp-rename": "^1.4.0"
   },
   "eslintIgnore": [
     "dist/**/*.js"
   ],
   "scripts": {
-    "build": "gulp build"
+    "build": "gulp build build_min"
   },
   "dependencies": {}
 }
