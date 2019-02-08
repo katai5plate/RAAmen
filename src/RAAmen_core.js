@@ -186,7 +186,7 @@
 
   window.RAA = { ...params, ...methods, ...collections };
 
-  if (!window.RPGAtsumaru) {
+  if (window.RAA.isEnable) {
     window.RPGAtsumaru = {
       comment: {
         changeScene: () => window.RAA.check(),
