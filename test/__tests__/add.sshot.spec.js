@@ -6,7 +6,6 @@ describe('addon: sshot', () => {
     'src/RAAmen_core.js',
     'src/RAAmen_add_sshot.js',
   ];
-
   it('APIが存在しない: モックを生成', () => {
     connect({ files });
     const { RPGAtsumaru } = window;
