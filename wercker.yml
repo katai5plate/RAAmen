@@ -12,4 +12,9 @@ build:
     - script:
       name: diff
       code: git diff --exit-code ./dist
+  steps:
+    - npm-install
+    - script:
+      name: ci
+      code: npm run ci
         
