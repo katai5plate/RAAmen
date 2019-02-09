@@ -218,7 +218,7 @@
     const callsLocalCompletionAPI = function (...args) {
       console.info('an EMPTY non-communication API was CALLED!', args);
       return window.RAA.request({
-        waitTime: params.responseTime.client, client: true,
+        client: true, waitTime: params.responseTime.client,
       });
     };
     const callsCommunicationAPI = function (...args) {
