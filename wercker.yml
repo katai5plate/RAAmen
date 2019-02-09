@@ -1,0 +1,19 @@
+box:
+  id: node:latest
+build:
+  steps:
+    - npm-install
+    - script:
+      name: jest
+      code: npm run test
+    - script:
+      name: build
+      code: npm run build
+    - script:
+      name: diff
+      code: git diff --exit-code ./dist
+  steps:
+    - npm-install
+    - script:
+      name: ci
+      code: npm run ci
