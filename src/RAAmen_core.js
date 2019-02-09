@@ -137,7 +137,7 @@
       if (falseCount !== 0 && !severeFalse && now - lastRequest > interval) {
         this.falseCount = 0;
       }
-      return { result: true };
+      return { result: true, error: null };
     },
     async request({
       // レスポンスが返ってくる時間
@@ -156,11 +156,13 @@
       return new Promise(
         (resolve, reject) => {
           setTimeout(() => {
-            const { result: statResult, error } = this.check();
-            if (statResult === false) {
-              reject(error);
+            if (noCheck === false) {
+              const { result: statResult, error } = this.check();
+              if (statResult === false) {
+                reject(error);
+              }
             }
-            if (!noCheck && checkValid(post) === false) {
+            if (checkValid(post) === false) {
               reject(failed);
             }
             resolve(succeeded);
@@ -181,8 +183,8 @@
         .then((r) => {
           console.info(`MODAL: ${r.src}`);
           alert(r.deco);
-        })
-        .catch(e => console.error(e));
+        });
+      // .catch(e => console.error(e));
     },
   };
 

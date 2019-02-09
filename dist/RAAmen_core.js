@@ -173,7 +173,8 @@
       }
 
       return {
-        result: true
+        result: true,
+        error: null
       };
     },
 
@@ -187,17 +188,21 @@
       // 成功時のレスポンス
       succeeded = {},
       // 失敗時のレスポンス
-      failed = collections.errors.BAD_REQUEST
+      failed = collections.errors.BAD_REQUEST,
+      // RAA.check()を行わないか
+      noCheck = false
     }) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          const {
-            result: statResult,
-            error
-          } = this.check();
+          if (noCheck === false) {
+            const {
+              result: statResult,
+              error
+            } = this.check();
 
-          if (statResult === false) {
-            reject(error);
+            if (statResult === false) {
+              reject(error);
+            }
           }
 
           if (checkValid(post) === false) {
@@ -225,7 +230,7 @@
       }).then(r => {
         console.info(`MODAL: ${r.src}`);
         alert(r.deco);
-      }).catch(e => console.error(e));
+      }); // .catch(e => console.error(e));
     }
 
   };
