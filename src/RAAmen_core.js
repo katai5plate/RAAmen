@@ -1,5 +1,5 @@
 /*:
- * @plugindesc RPGアツマールAPIモック（コア）
+ * @plugindesc RAAmen コアスクリプト
  * @author Had2Apps
  *
  * @help

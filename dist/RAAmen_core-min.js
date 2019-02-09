@@ -9,7 +9,7 @@
 // WebSite : https://Had2Apps.com
 // ==============================================================================
 "use strict";/*:
- * @plugindesc RPGアツマールAPIモック（コア）
+ * @plugindesc RAAmen コアスクリプト
  * @author Had2Apps
  *
  * @help

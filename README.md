@@ -6,7 +6,7 @@ https://github.com/katai5plate/RAAmen/tree/master/dist
 - `-min` がついているものは、軽量化されたものです。
 
 ## 使い方
-1. プラグイン設定画面で、`RAAmen_core.js`の下に他の`RAAmen_add_**.js`が来るように設定し、`ON`にします
+1. プラグイン設定画面で、`RAAmen_core.js`の下に他の`RAAmen_plus_**.js`が来るように設定し、`ON`にします
 2. テストプレイ時に`F8`キーを押してデバッグコンソールを開き、`console.log(!!RAA&&!!RPGAtsumaru);`を入力し`true`が表示されたら導入成功です。
 
 ## リファレンス

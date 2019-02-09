@@ -11,11 +11,13 @@
 "use strict";
 
 /*:
- * @plugindesc RPGアツマールAPIモック（＋スクリーンショット）
+ * @plugindesc RAAmen ＋スクリーンショットをシェアする
  * @author Had2Apps
  *
  * @help
  * これはRPGアツマールAPIのモックプラグインのアドオンです。
+ * 単体では動作しません。このプラグインより先に、
+ * RAAmen_core.js が読み込まれるように設定してください。
  *
  * このアドオンにより使えるようになる機能：
  * ・window.RPGAtsumaru.experimental.screenshot.displayModal
