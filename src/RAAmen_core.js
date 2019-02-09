@@ -100,6 +100,9 @@
   };
 
   const methods = {
+    local() {
+      console.info('Non-communication API was CALLED!');
+    },
     send() {
       const now = new Date();
       const {
@@ -193,51 +196,51 @@
   if (window.RAA.isEnable) {
     window.RPGAtsumaru = {
       comment: {
-        changeScene: () => window.RAA.send(),
-        resetAndChangeScene: () => window.RAA.send(),
-        pushContextFactor: () => window.RAA.send(),
-        pushMinorContext: () => window.RAA.send(),
-        setContext: () => window.RAA.send(),
+        changeScene: () => window.RAA.local(),
+        resetAndChangeScene: () => window.RAA.local(),
+        pushContextFactor: () => window.RAA.local(),
+        pushMinorContext: () => window.RAA.local(),
+        setContext: () => window.RAA.local(),
         cameOut: {
-          subscribe: () => window.RAA.send(),
+          subscribe: () => window.RAA.local(),
         },
         posted: {
-          subscribe: () => window.RAA.send(),
+          subscribe: () => window.RAA.local(),
         },
-        verbose: () => window.RAA.send(),
+        verbose: () => window.RAA.local(),
       },
       controllers: {
         defaultController: {
-          subscribe: () => window.RAA.send(),
+          subscribe: () => window.RAA.local(),
         },
       },
       storage: {
-        getItems: () => window.RAA.send(),
-        setItems: () => window.RAA.send(),
-        removeItem: () => window.RAA.send(),
+        getItems: () => window.RAA.local(),
+        setItems: () => window.RAA.local(),
+        removeItem: () => window.RAA.local(),
       },
       volume: {
-        getCurrentValue: () => window.RAA.send(),
+        getCurrentValue: () => window.RAA.local(),
         changed: {
-          subscribe: () => window.RAA.send(),
+          subscribe: () => window.RAA.local(),
         },
       },
       popups: {
-        openLink: () => window.RAA.send(),
+        openLink: () => window.RAA.local(),
       },
       experimental: {
         query: [],
         popups: {
-          displayCreatorInformationModal: () => window.RAA.send(),
+          displayCreatorInformationModal: () => window.RAA.local(),
         },
         scoreboards: {
           setRecord: () => window.RAA.send(),
-          display: () => window.RAA.send(),
+          display: () => window.RAA.local(),
           getRecords: () => window.RAA.send(),
         },
         screenshot: {
-          displayModal: () => window.RAA.send(),
-          setScreenshotHandler: () => window.RAA.send(),
+          displayModal: () => window.RAA.local(),
+          setScreenshotHandler: () => window.RAA.local(),
         },
         globalServerVariable: {
           getGlobalServerVariable: () => window.RAA.send(),
@@ -258,7 +261,7 @@
           getUserSignals: () => window.RAA.send(),
         },
         interplayer: {
-          enable: () => window.RAA.send(),
+          enable: () => window.RAA.local(),
         },
       },
     };
