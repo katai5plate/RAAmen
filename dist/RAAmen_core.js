@@ -173,7 +173,8 @@
       }
 
       return {
-        result: true
+        result: true,
+        error: null
       };
     },
 
@@ -187,17 +188,21 @@
       // 成功時のレスポンス
       succeeded = {},
       // 失敗時のレスポンス
-      failed = collections.errors.BAD_REQUEST
-    }) {
+      failed = collections.errors.BAD_REQUEST,
+      // RAA.check()を行わないか
+      noCheck = false
+    } = {}) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          const {
-            result: statResult,
-            error
-          } = this.check();
+          if (noCheck === false) {
+            const {
+              result: statResult,
+              error
+            } = this.check();
 
-          if (statResult === false) {
-            reject(error);
+            if (statResult === false) {
+              reject(error);
+            }
           }
 
           if (checkValid(post) === false) {
@@ -213,7 +218,8 @@
       message,
       decorate = s => s,
       checkValid = p => !!p
-    }) {
+    } = {}) {
+      if (!message) throw new Error('message is undefined');
       await this.request({
         waitTime: this.responseTime.modal,
         post: message,
@@ -223,9 +229,9 @@
         },
         checkValid
       }).then(r => {
-        console.info(`MODAL: ${r.src}`);
+        console.info(`MODAL: ${r.src}, DECO: ${r.deco}`);
         alert(r.deco);
-      }).catch(e => console.error(e));
+      });
     }
 
   };

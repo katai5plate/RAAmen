@@ -137,7 +137,7 @@
       if (falseCount !== 0 && !severeFalse && now - lastRequest > interval) {
         this.falseCount = 0;
       }
-      return { result: true };
+      return { result: true, error: null };
     },
     async request({
       // レスポンスが返ってくる時間
@@ -152,15 +152,17 @@
       failed = collections.errors.BAD_REQUEST,
       // RAA.check()を行わないか
       noCheck = false,
-    }) {
+    } = {}) {
       return new Promise(
         (resolve, reject) => {
           setTimeout(() => {
-            const { result: statResult, error } = this.check();
-            if (statResult === false) {
-              reject(error);
+            if (noCheck === false) {
+              const { result: statResult, error } = this.check();
+              if (statResult === false) {
+                reject(error);
+              }
             }
-            if (!noCheck && checkValid(post) === false) {
+            if (checkValid(post) === false) {
               reject(failed);
             }
             resolve(succeeded);
@@ -168,7 +170,8 @@
         },
       );
     },
-    async modal({ message, decorate = s => s, checkValid = p => !!p }) {
+    async modal({ message, decorate = s => s, checkValid = p => !!p } = {}) {
+      if (!message) throw new Error('message is undefined');
       await this.request({
         waitTime: this.responseTime.modal,
         post: message,
@@ -179,10 +182,9 @@
         checkValid,
       })
         .then((r) => {
-          console.info(`MODAL: ${r.src}`);
+          console.info(`MODAL: ${r.src}, DECO: ${r.deco}`);
           alert(r.deco);
-        })
-        .catch(e => console.error(e));
+        });
     },
   };
 
