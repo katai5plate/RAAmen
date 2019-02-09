@@ -16,7 +16,7 @@ https://github.com/katai5plate/RAAmen/tree/master/dist
 |返り値|型|説明|
 |-|-|-|
 |result|boolean|正常なレスポンスか|
-|(error)|RAA.errors|(result が false のとき)エラー内容|
+|(error)|RAA.errors\<AtsumaruApiError\>/null|(result が false のとき)エラー内容|
 
 ### RAA.request({?waitTime, ?post, ?checkValid, ?succeeded, ?feiled, ?noCheck}) => Promise\<any\>
 - 疑似サーバーにリクエストを送信します。
