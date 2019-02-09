@@ -43,6 +43,7 @@
     responseTime: {
       normal: 1000,
       modal: 500,
+      client: 100,
     },
   };
 
@@ -123,9 +124,6 @@
   };
 
   const methods = {
-    local() {
-      console.info('Non-communication API was CALLED!');
-    },
     send() {
       const now = new Date();
       const {
@@ -217,74 +215,84 @@
   window.RAA = { ...params, ...methods, ...collections };
 
   if (window.RAA.isEnable) {
+    const thisIsLocalCompletionAPI = function (...args) {
+      console.info('an EMPTY non-communication API was CALLED!', args);
+      return window.RAA.request({
+        waitTime: params.responseTime.client, client: true,
+      });
+    };
+    const thisIsCommunicationAPI = function (...args) {
+      console.info('an EMPTY communication API was CALLED!', args);
+      return window.RAA.request();
+    };
     window.RPGAtsumaru = {
       comment: {
-        changeScene: () => window.RAA.local(),
-        resetAndChangeScene: () => window.RAA.local(),
-        pushContextFactor: () => window.RAA.local(),
-        pushMinorContext: () => window.RAA.local(),
-        setContext: () => window.RAA.local(),
+        changeScene: thisIsLocalCompletionAPI,
+        resetAndChangeScene: thisIsLocalCompletionAPI,
+        pushContextFactor: thisIsLocalCompletionAPI,
+        pushMinorContext: thisIsLocalCompletionAPI,
+        setContext: thisIsLocalCompletionAPI,
         cameOut: {
-          subscribe: () => window.RAA.local(),
+          subscribe: thisIsLocalCompletionAPI,
         },
         posted: {
-          subscribe: () => window.RAA.local(),
+          subscribe: thisIsLocalCompletionAPI,
         },
-        verbose: () => window.RAA.local(),
+        verbose: thisIsLocalCompletionAPI,
       },
       controllers: {
         defaultController: {
-          subscribe: () => window.RAA.local(),
+          subscribe: thisIsLocalCompletionAPI,
         },
       },
       storage: {
-        getItems: () => window.RAA.local(),
-        setItems: () => window.RAA.local(),
-        removeItem: () => window.RAA.local(),
+        getItems: thisIsLocalCompletionAPI,
+        setItems: thisIsLocalCompletionAPI,
+        removeItem: thisIsLocalCompletionAPI,
       },
       volume: {
-        getCurrentValue: () => window.RAA.local(),
+        getCurrentValue: thisIsLocalCompletionAPI,
         changed: {
-          subscribe: () => window.RAA.local(),
+          subscribe: thisIsLocalCompletionAPI,
         },
       },
       popups: {
-        openLink: () => window.RAA.local(),
+        openLink: thisIsLocalCompletionAPI,
       },
       experimental: {
         query: [],
         popups: {
-          displayCreatorInformationModal: () => window.RAA.local(),
+          displayCreatorInformationModal: thisIsLocalCompletionAPI,
         },
         scoreboards: {
-          setRecord: () => window.RAA.send(),
-          display: () => window.RAA.local(),
-          getRecords: () => window.RAA.send(),
+          setRecord: thisIsCommunicationAPI,
+          display: thisIsLocalCompletionAPI,
+          getRecords: thisIsCommunicationAPI,
         },
         screenshot: {
-          displayModal: () => window.RAA.local(),
-          setScreenshotHandler: () => window.RAA.local(),
+          displayModal: thisIsLocalCompletionAPI,
+          setScreenshotHandler: thisIsLocalCompletionAPI,
         },
         globalServerVariable: {
-          getGlobalServerVariable: () => window.RAA.send(),
-          triggerCall: () => window.RAA.send(),
+          getGlobalServerVariable: thisIsCommunicationAPI,
+          triggerCall: thisIsCommunicationAPI,
         },
         storage: {
-          getSharedItems: () => window.RAA.send(),
+          getSharedItems: thisIsCommunicationAPI,
         },
         user: {
-          getSelfInformation: () => window.RAA.send(),
-          getUserInformation: () => window.RAA.send(),
-          getRecentUsers: () => window.RAA.send(),
+          getSelfInformation: thisIsCommunicationAPI,
+          getUserInformation: thisIsCommunicationAPI,
+          getRecentUsers: thisIsCommunicationAPI,
         },
         signal: {
-          sendSignalToGlobal: () => window.RAA.send(),
-          getGlobalSignals: () => window.RAA.send(),
-          sendSignalToUser: () => window.RAA.send(),
-          getUserSignals: () => window.RAA.send(),
+          sendSignalToGlobal: thisIsCommunicationAPI,
+          getGlobalSignals: thisIsCommunicationAPI,
+          sendSignalToUser: thisIsCommunicationAPI,
+          getUserSignals: thisIsCommunicationAPI,
         },
         interplayer: {
-          enable: () => window.RAA.local(),
+          enable: thisIsLocalCompletionAPI,
         },
       },
     };
