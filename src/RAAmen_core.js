@@ -140,7 +140,7 @@
       return { result: true, error: null };
     },
     async request({
-      // レスポンスが返ってくる時間
+      // レスポンスが返ってくる時間！
       waitTime = params.responseTime.normal,
       // 送信するデータ
       post = {},
