@@ -11,7 +11,7 @@
 "use strict";
 
 /*:
- * @plugindesc RPGアツマールAPIモック（コア）
+ * @plugindesc RAAmen コアスクリプト
  * @author Had2Apps
  *
  * @help
@@ -53,16 +53,17 @@
     // レスポンスが返ってくる時間プリセット
     responseTime: {
       normal: 1000,
-      modal: 500
+      modal: 500,
+      client: 100
     }
   };
   const collections = {
     errors: {
-      BAD_REQUEST: new AtsumaruApiError('BAD_REQUEST'),
-      UNAUTHORIZED: new AtsumaruApiError('UNAUTHORIZED'),
-      API_CALL_LIMIT_EXCEEDED: new AtsumaruApiError('API_CALL_LIMIT_EXCEEDED'),
-      FORBIDDEN: new AtsumaruApiError('FORBIDDEN'),
-      INTERNAL_SERVER_ERROR: new AtsumaruApiError('INTERNAL_SERVER_ERROR')
+      BAD_REQUEST: new AtsumaruApiError('BAD_REQUEST', `いずれかの問題：${['同じポップアップがすでに表示されています', 'スクリーンショットの撮影に失敗しました', '正しいURLが指定されていません', 'トリガーIDが自然数ではありません', 'グローバルサーバー変数IDが自然数ではありません', 'ユーザーIDリストが配列ではありません', 'ユーザーIDリストが1～100件ではありません', 'ユーザーIDが自然数ではありません', 'シグナルデータが文字列型ではありません'].join(', ')}`),
+      UNAUTHORIZED: new AtsumaruApiError('UNAUTHORIZED', `いずれかの問題：${['ログインしていません', '非ログイン時に共有セーブを保存できません'].join(', ')}`),
+      API_CALL_LIMIT_EXCEEDED: new AtsumaruApiError('API_CALL_LIMIT_EXCEEDED', 'このアツマールAPIへのアクセス回数が多すぎます'),
+      FORBIDDEN: new AtsumaruApiError('FORBIDDEN', '対象のユーザーのプレイヤー間通信が有効化されていません'),
+      INTERNAL_SERVER_ERROR: new AtsumaruApiError('INTERNAL_SERVER_ERROR', '内部エラーが発生しました')
     },
     state: {
       scoreboards: [{
@@ -118,7 +119,7 @@
     }
   };
   const methods = {
-    check() {
+    send() {
       const now = new Date();
       const {
         interval,
@@ -189,16 +190,16 @@
       succeeded = {},
       // 失敗時のレスポンス
       failed = collections.errors.BAD_REQUEST,
-      // RAA.check()を行わないか
-      noCheck = false
+      // RAA.send()を行わないか（非通信）
+      client = false
     } = {}) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          if (noCheck === false) {
+          if (client === false) {
             const {
               result: statResult,
               error
-            } = this.check();
+            } = this.send();
 
             if (statResult === false) {
               reject(error);
@@ -241,74 +242,87 @@
   };
 
   if (window.RAA.isEnable) {
+    const callsLocalCompletionAPI = function (...args) {
+      console.info('an EMPTY non-communication API was CALLED!', args);
+      return window.RAA.request({
+        client: true,
+        waitTime: params.responseTime.client
+      });
+    };
+
+    const callsCommunicationAPI = function (...args) {
+      console.info('an EMPTY communication API was CALLED!', args);
+      return window.RAA.request();
+    };
+
     window.RPGAtsumaru = {
       comment: {
-        changeScene: () => window.RAA.check(),
-        resetAndChangeScene: () => window.RAA.check(),
-        pushContextFactor: () => window.RAA.check(),
-        pushMinorContext: () => window.RAA.check(),
-        setContext: () => window.RAA.check(),
+        changeScene: callsLocalCompletionAPI,
+        resetAndChangeScene: callsLocalCompletionAPI,
+        pushContextFactor: callsLocalCompletionAPI,
+        pushMinorContext: callsLocalCompletionAPI,
+        setContext: callsLocalCompletionAPI,
         cameOut: {
-          subscribe: () => window.RAA.check()
+          subscribe: callsLocalCompletionAPI
         },
         posted: {
-          subscribe: () => window.RAA.check()
+          subscribe: callsLocalCompletionAPI
         },
-        verbose: () => window.RAA.check()
+        verbose: callsLocalCompletionAPI
       },
       controllers: {
         defaultController: {
-          subscribe: () => window.RAA.check()
+          subscribe: callsLocalCompletionAPI
         }
       },
       storage: {
-        getItems: () => window.RAA.check(),
-        setItems: () => window.RAA.check(),
-        removeItem: () => window.RAA.check()
+        getItems: callsLocalCompletionAPI,
+        setItems: callsLocalCompletionAPI,
+        removeItem: callsLocalCompletionAPI
       },
       volume: {
-        getCurrentValue: () => window.RAA.check(),
+        getCurrentValue: callsLocalCompletionAPI,
         changed: {
-          subscribe: () => window.RAA.check()
+          subscribe: callsLocalCompletionAPI
         }
       },
       popups: {
-        openLink: () => window.RAA.check()
+        openLink: callsLocalCompletionAPI
       },
       experimental: {
         query: [],
         popups: {
-          displayCreatorInformationModal: () => window.RAA.check()
+          displayCreatorInformationModal: callsLocalCompletionAPI
         },
         scoreboards: {
-          setRecord: () => window.RAA.check(),
-          display: () => window.RAA.check(),
-          getRecords: () => window.RAA.check()
+          setRecord: callsCommunicationAPI,
+          display: callsLocalCompletionAPI,
+          getRecords: callsCommunicationAPI
         },
         screenshot: {
-          displayModal: () => window.RAA.check(),
-          setScreenshotHandler: () => window.RAA.check()
+          displayModal: callsLocalCompletionAPI,
+          setScreenshotHandler: callsLocalCompletionAPI
         },
         globalServerVariable: {
-          getGlobalServerVariable: () => window.RAA.check(),
-          triggerCall: () => window.RAA.check()
+          getGlobalServerVariable: callsCommunicationAPI,
+          triggerCall: callsCommunicationAPI
         },
         storage: {
-          getSharedItems: () => window.RAA.check()
+          getSharedItems: callsCommunicationAPI
         },
         user: {
-          getSelfInformation: () => window.RAA.check(),
-          getUserInformation: () => window.RAA.check(),
-          getRecentUsers: () => window.RAA.check()
+          getSelfInformation: callsCommunicationAPI,
+          getUserInformation: callsCommunicationAPI,
+          getRecentUsers: callsCommunicationAPI
         },
         signal: {
-          sendSignalToGlobal: () => window.RAA.check(),
-          getGlobalSignals: () => window.RAA.check(),
-          sendSignalToUser: () => window.RAA.check(),
-          getUserSignals: () => window.RAA.check()
+          sendSignalToGlobal: callsCommunicationAPI,
+          getGlobalSignals: callsCommunicationAPI,
+          sendSignalToUser: callsCommunicationAPI,
+          getUserSignals: callsCommunicationAPI
         },
         interplayer: {
-          enable: () => window.RAA.check()
+          enable: callsLocalCompletionAPI
         }
       }
     };
