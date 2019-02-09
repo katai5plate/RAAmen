@@ -230,7 +230,7 @@
       }).then(r => {
         console.info(`MODAL: ${r.src}`);
         alert(r.deco);
-      }); // .catch(e => console.error(e));
+      });
     }
 
   };
