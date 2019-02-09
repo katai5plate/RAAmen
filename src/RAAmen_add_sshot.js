@@ -25,19 +25,18 @@
           decorate: s => `<img src="${s}" />`,
         });
       };
-      RAA.state.screenshot.handler
-        .then(r => openModal(r))
-        .catch(e => console.error(e));
+      return RAA.state.screenshot.handler
+        .then(r => openModal(r));
     };
 
     screenshot.setScreenshotHandler = async (promise) => {
-      await RAA.request({
+      const send = await RAA.request({
         waitTime: RAA.responseTime.normal,
         post: promise,
         checkValid: p => p instanceof Promise,
       })
-        .then(() => { RAA.state.screenshot.handler = promise; })
-        .catch(e => console.error(e));
+        .then(() => { RAA.state.screenshot.handler = promise; });
+      return send;
     };
   }
 })();
