@@ -17,4 +17,3 @@ build:
     - script:
       name: ci
       code: npm run ci
-        
