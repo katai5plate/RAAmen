@@ -1,12 +1,6 @@
 box:
   id: node:latest
-test 1:
-  steps:
-    - npm-install
-    - script:
-      name: ci script
-      code: npm run ci
-test 2:
+build:
   steps:
     - npm-install
     - script:
