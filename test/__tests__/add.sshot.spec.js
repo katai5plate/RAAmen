@@ -2,7 +2,7 @@
 const connect = require('../connect');
 
 describe('addon: sshot', () => {
-  const fail = () => expect().toEqual('FAILED');
+  // const fail = () => expect().toEqual('FAILED');
   const files = [
     'src/RAAmen_core.js',
     'src/RAAmen_add_sshot.js',
