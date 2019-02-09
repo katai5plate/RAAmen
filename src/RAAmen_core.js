@@ -257,6 +257,9 @@
           sendSignalToUser: () => window.RAA.check(),
           getUserSignals: () => window.RAA.check(),
         },
+        interplayer: {
+          enable: () => window.RAA.check(),
+        },
       },
     };
   }
