@@ -3,7 +3,7 @@
  * @author Had2Apps
  *
  * @help
- * これはRPGアツマールAPIのモックプラグインのアドオンです。!
+ * これはRPGアツマールAPIのモックプラグインのアドオンです。
  *
  * このアドオンにより使えるようになる機能：
  * ・window.RPGAtsumaru.experimental.screenshot.displayModal
