@@ -21,10 +21,10 @@ describe('core', () => {
           .then((res) => { expect(res).toEqual({}); })
           .catch(() => { fail(); });
       });
-      it('noCheck : 送信 > 成功', async () => {
+      it('client : 送信 > 成功', async () => {
         connect({ files });
         const { RAA } = window;
-        return RAA.request({ checkValid: () => true, noCheck: true })
+        return RAA.request({ checkValid: () => true, client: true })
           .then((res) => { expect(res).toEqual({}); })
           .catch(() => { fail(); });
       });
@@ -38,10 +38,10 @@ describe('core', () => {
             expect(error.code).toEqual('BAD_REQUEST');
           });
       });
-      it('noCheck : 通らない送信 > 成功', async () => {
+      it('client : 通らない送信 > 成功', async () => {
         connect({ files });
         const { RAA } = window;
-        return RAA.request({ checkValid: () => true, noCheck: true })
+        return RAA.request({ checkValid: () => true, client: true })
           .then((res) => { expect(res).toEqual({}); })
           .catch(() => { fail(); });
       });
@@ -67,12 +67,12 @@ describe('core', () => {
             expect(error.code).toEqual('API_CALL_LIMIT_EXCEEDED');
           });
       });
-      it('noCheck : 過度な送信 > 成功', async () => {
+      it('client : 過度な送信 > 成功', async () => {
         connect({ files });
         const { RAA } = window;
         const { falseMax } = RAA;
         let response;
-        const request = () => RAA.request({ checkValid: () => true, noCheck: true });
+        const request = () => RAA.request({ checkValid: () => true, client: true });
         // 初期送信
         response = await request();
         expect(response).toEqual({});

@@ -100,7 +100,7 @@
   };
 
   const methods = {
-    check() {
+    send() {
       const now = new Date();
       const {
         interval, cooldown,
@@ -150,14 +150,14 @@
       succeeded = {},
       // 失敗時のレスポンス
       failed = collections.errors.BAD_REQUEST,
-      // RAA.check()を行わないか
-      noCheck = false,
+      // RAA.send()を行わないか（非通信）
+      client = false,
     } = {}) {
       return new Promise(
         (resolve, reject) => {
           setTimeout(() => {
-            if (noCheck === false) {
-              const { result: statResult, error } = this.check();
+            if (client === false) {
+              const { result: statResult, error } = this.send();
               if (statResult === false) {
                 reject(error);
               }
@@ -193,72 +193,72 @@
   if (window.RAA.isEnable) {
     window.RPGAtsumaru = {
       comment: {
-        changeScene: () => window.RAA.check(),
-        resetAndChangeScene: () => window.RAA.check(),
-        pushContextFactor: () => window.RAA.check(),
-        pushMinorContext: () => window.RAA.check(),
-        setContext: () => window.RAA.check(),
+        changeScene: () => window.RAA.send(),
+        resetAndChangeScene: () => window.RAA.send(),
+        pushContextFactor: () => window.RAA.send(),
+        pushMinorContext: () => window.RAA.send(),
+        setContext: () => window.RAA.send(),
         cameOut: {
-          subscribe: () => window.RAA.check(),
+          subscribe: () => window.RAA.send(),
         },
         posted: {
-          subscribe: () => window.RAA.check(),
+          subscribe: () => window.RAA.send(),
         },
-        verbose: () => window.RAA.check(),
+        verbose: () => window.RAA.send(),
       },
       controllers: {
         defaultController: {
-          subscribe: () => window.RAA.check(),
+          subscribe: () => window.RAA.send(),
         },
       },
       storage: {
-        getItems: () => window.RAA.check(),
-        setItems: () => window.RAA.check(),
-        removeItem: () => window.RAA.check(),
+        getItems: () => window.RAA.send(),
+        setItems: () => window.RAA.send(),
+        removeItem: () => window.RAA.send(),
       },
       volume: {
-        getCurrentValue: () => window.RAA.check(),
+        getCurrentValue: () => window.RAA.send(),
         changed: {
-          subscribe: () => window.RAA.check(),
+          subscribe: () => window.RAA.send(),
         },
       },
       popups: {
-        openLink: () => window.RAA.check(),
+        openLink: () => window.RAA.send(),
       },
       experimental: {
         query: [],
         popups: {
-          displayCreatorInformationModal: () => window.RAA.check(),
+          displayCreatorInformationModal: () => window.RAA.send(),
         },
         scoreboards: {
-          setRecord: () => window.RAA.check(),
-          display: () => window.RAA.check(),
-          getRecords: () => window.RAA.check(),
+          setRecord: () => window.RAA.send(),
+          display: () => window.RAA.send(),
+          getRecords: () => window.RAA.send(),
         },
         screenshot: {
-          displayModal: () => window.RAA.check(),
-          setScreenshotHandler: () => window.RAA.check(),
+          displayModal: () => window.RAA.send(),
+          setScreenshotHandler: () => window.RAA.send(),
         },
         globalServerVariable: {
-          getGlobalServerVariable: () => window.RAA.check(),
-          triggerCall: () => window.RAA.check(),
+          getGlobalServerVariable: () => window.RAA.send(),
+          triggerCall: () => window.RAA.send(),
         },
         storage: {
-          getSharedItems: () => window.RAA.check(),
+          getSharedItems: () => window.RAA.send(),
         },
         user: {
-          getSelfInformation: () => window.RAA.check(),
-          getUserInformation: () => window.RAA.check(),
-          getRecentUsers: () => window.RAA.check(),
+          getSelfInformation: () => window.RAA.send(),
+          getUserInformation: () => window.RAA.send(),
+          getRecentUsers: () => window.RAA.send(),
         },
         signal: {
-          sendSignalToGlobal: () => window.RAA.check(),
-          getGlobalSignals: () => window.RAA.check(),
-          sendSignalToUser: () => window.RAA.check(),
-          getUserSignals: () => window.RAA.check(),
+          sendSignalToGlobal: () => window.RAA.send(),
+          getGlobalSignals: () => window.RAA.send(),
+          sendSignalToUser: () => window.RAA.send(),
+          getUserSignals: () => window.RAA.send(),
         },
         interplayer: {
-          enable: () => window.RAA.check(),
+          enable: () => window.RAA.send(),
         },
       },
     };
