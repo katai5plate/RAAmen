@@ -215,84 +215,84 @@
   window.RAA = { ...params, ...methods, ...collections };
 
   if (window.RAA.isEnable) {
-    const thisIsLocalCompletionAPI = function (...args) {
+    const callsLocalCompletionAPI = function (...args) {
       console.info('an EMPTY non-communication API was CALLED!', args);
       return window.RAA.request({
         waitTime: params.responseTime.client, client: true,
       });
     };
-    const thisIsCommunicationAPI = function (...args) {
+    const callsCommunicationAPI = function (...args) {
       console.info('an EMPTY communication API was CALLED!', args);
       return window.RAA.request();
     };
     window.RPGAtsumaru = {
       comment: {
-        changeScene: thisIsLocalCompletionAPI,
-        resetAndChangeScene: thisIsLocalCompletionAPI,
-        pushContextFactor: thisIsLocalCompletionAPI,
-        pushMinorContext: thisIsLocalCompletionAPI,
-        setContext: thisIsLocalCompletionAPI,
+        changeScene: callsLocalCompletionAPI,
+        resetAndChangeScene: callsLocalCompletionAPI,
+        pushContextFactor: callsLocalCompletionAPI,
+        pushMinorContext: callsLocalCompletionAPI,
+        setContext: callsLocalCompletionAPI,
         cameOut: {
-          subscribe: thisIsLocalCompletionAPI,
+          subscribe: callsLocalCompletionAPI,
         },
         posted: {
-          subscribe: thisIsLocalCompletionAPI,
+          subscribe: callsLocalCompletionAPI,
         },
-        verbose: thisIsLocalCompletionAPI,
+        verbose: callsLocalCompletionAPI,
       },
       controllers: {
         defaultController: {
-          subscribe: thisIsLocalCompletionAPI,
+          subscribe: callsLocalCompletionAPI,
         },
       },
       storage: {
-        getItems: thisIsLocalCompletionAPI,
-        setItems: thisIsLocalCompletionAPI,
-        removeItem: thisIsLocalCompletionAPI,
+        getItems: callsLocalCompletionAPI,
+        setItems: callsLocalCompletionAPI,
+        removeItem: callsLocalCompletionAPI,
       },
       volume: {
-        getCurrentValue: thisIsLocalCompletionAPI,
+        getCurrentValue: callsLocalCompletionAPI,
         changed: {
-          subscribe: thisIsLocalCompletionAPI,
+          subscribe: callsLocalCompletionAPI,
         },
       },
       popups: {
-        openLink: thisIsLocalCompletionAPI,
+        openLink: callsLocalCompletionAPI,
       },
       experimental: {
         query: [],
         popups: {
-          displayCreatorInformationModal: thisIsLocalCompletionAPI,
+          displayCreatorInformationModal: callsLocalCompletionAPI,
         },
         scoreboards: {
-          setRecord: thisIsCommunicationAPI,
-          display: thisIsLocalCompletionAPI,
-          getRecords: thisIsCommunicationAPI,
+          setRecord: callsCommunicationAPI,
+          display: callsLocalCompletionAPI,
+          getRecords: callsCommunicationAPI,
         },
         screenshot: {
-          displayModal: thisIsLocalCompletionAPI,
-          setScreenshotHandler: thisIsLocalCompletionAPI,
+          displayModal: callsLocalCompletionAPI,
+          setScreenshotHandler: callsLocalCompletionAPI,
         },
         globalServerVariable: {
-          getGlobalServerVariable: thisIsCommunicationAPI,
-          triggerCall: thisIsCommunicationAPI,
+          getGlobalServerVariable: callsCommunicationAPI,
+          triggerCall: callsCommunicationAPI,
         },
         storage: {
-          getSharedItems: thisIsCommunicationAPI,
+          getSharedItems: callsCommunicationAPI,
         },
         user: {
-          getSelfInformation: thisIsCommunicationAPI,
-          getUserInformation: thisIsCommunicationAPI,
-          getRecentUsers: thisIsCommunicationAPI,
+          getSelfInformation: callsCommunicationAPI,
+          getUserInformation: callsCommunicationAPI,
+          getRecentUsers: callsCommunicationAPI,
         },
         signal: {
-          sendSignalToGlobal: thisIsCommunicationAPI,
-          getGlobalSignals: thisIsCommunicationAPI,
-          sendSignalToUser: thisIsCommunicationAPI,
-          getUserSignals: thisIsCommunicationAPI,
+          sendSignalToGlobal: callsCommunicationAPI,
+          getGlobalSignals: callsCommunicationAPI,
+          sendSignalToUser: callsCommunicationAPI,
+          getUserSignals: callsCommunicationAPI,
         },
         interplayer: {
-          enable: thisIsLocalCompletionAPI,
+          enable: callsLocalCompletionAPI,
         },
       },
     };
