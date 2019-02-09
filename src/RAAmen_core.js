@@ -48,11 +48,34 @@
 
   const collections = {
     errors: {
-      BAD_REQUEST: new AtsumaruApiError('BAD_REQUEST'),
-      UNAUTHORIZED: new AtsumaruApiError('UNAUTHORIZED'),
-      API_CALL_LIMIT_EXCEEDED: new AtsumaruApiError('API_CALL_LIMIT_EXCEEDED'),
-      FORBIDDEN: new AtsumaruApiError('FORBIDDEN'),
-      INTERNAL_SERVER_ERROR: new AtsumaruApiError('INTERNAL_SERVER_ERROR'),
+      BAD_REQUEST: new AtsumaruApiError(
+        'BAD_REQUEST', `いずれかの問題：${[
+          '同じポップアップがすでに表示されています',
+          'スクリーンショットの撮影に失敗しました',
+          '正しいURLが指定されていません',
+          'トリガーIDが自然数ではありません',
+          'グローバルサーバー変数IDが自然数ではありません',
+          'ユーザーIDリストが配列ではありません',
+          'ユーザーIDリストが1～100件ではありません',
+          'ユーザーIDが自然数ではありません',
+          'シグナルデータが文字列型ではありません'].join(', ')}`,
+      ),
+      UNAUTHORIZED: new AtsumaruApiError(
+        'UNAUTHORIZED', `いずれかの問題：${[
+          'ログインしていません',
+          '非ログイン時に共有セーブを保存できません'].join(', ')}`,
+      ),
+      API_CALL_LIMIT_EXCEEDED: new AtsumaruApiError(
+        'API_CALL_LIMIT_EXCEEDED',
+        'このアツマールAPIへのアクセス回数が多すぎます',
+      ),
+      FORBIDDEN: new AtsumaruApiError(
+        'FORBIDDEN',
+        '対象のユーザーのプレイヤー間通信が有効化されていません',
+      ),
+      INTERNAL_SERVER_ERROR: new AtsumaruApiError(
+        'INTERNAL_SERVER_ERROR', '内部エラーが発生しました',
+      ),
     },
     state: {
       scoreboards: [

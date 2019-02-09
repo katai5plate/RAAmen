@@ -58,11 +58,11 @@
   };
   const collections = {
     errors: {
-      BAD_REQUEST: new AtsumaruApiError('BAD_REQUEST'),
-      UNAUTHORIZED: new AtsumaruApiError('UNAUTHORIZED'),
-      API_CALL_LIMIT_EXCEEDED: new AtsumaruApiError('API_CALL_LIMIT_EXCEEDED'),
-      FORBIDDEN: new AtsumaruApiError('FORBIDDEN'),
-      INTERNAL_SERVER_ERROR: new AtsumaruApiError('INTERNAL_SERVER_ERROR')
+      BAD_REQUEST: new AtsumaruApiError('BAD_REQUEST', `いずれかの問題：${['同じポップアップがすでに表示されています', 'スクリーンショットの撮影に失敗しました', '正しいURLが指定されていません', 'トリガーIDが自然数ではありません', 'グローバルサーバー変数IDが自然数ではありません', 'ユーザーIDリストが配列ではありません', 'ユーザーIDリストが1～100件ではありません', 'ユーザーIDが自然数ではありません', 'シグナルデータが文字列型ではありません'].join(', ')}`),
+      UNAUTHORIZED: new AtsumaruApiError('UNAUTHORIZED', `いずれかの問題：${['ログインしていません', '非ログイン時に共有セーブを保存できません'].join(', ')}`),
+      API_CALL_LIMIT_EXCEEDED: new AtsumaruApiError('API_CALL_LIMIT_EXCEEDED', 'このアツマールAPIへのアクセス回数が多すぎます'),
+      FORBIDDEN: new AtsumaruApiError('FORBIDDEN', '対象のユーザーのプレイヤー間通信が有効化されていません'),
+      INTERNAL_SERVER_ERROR: new AtsumaruApiError('INTERNAL_SERVER_ERROR', '内部エラーが発生しました')
     },
     state: {
       scoreboards: [{
@@ -118,6 +118,10 @@
     }
   };
   const methods = {
+    local() {
+      console.info('Non-communication API was CALLED!');
+    },
+
     send() {
       const now = new Date();
       const {
@@ -243,51 +247,51 @@
   if (window.RAA.isEnable) {
     window.RPGAtsumaru = {
       comment: {
-        changeScene: () => window.RAA.send(),
-        resetAndChangeScene: () => window.RAA.send(),
-        pushContextFactor: () => window.RAA.send(),
-        pushMinorContext: () => window.RAA.send(),
-        setContext: () => window.RAA.send(),
+        changeScene: () => window.RAA.local(),
+        resetAndChangeScene: () => window.RAA.local(),
+        pushContextFactor: () => window.RAA.local(),
+        pushMinorContext: () => window.RAA.local(),
+        setContext: () => window.RAA.local(),
         cameOut: {
-          subscribe: () => window.RAA.send()
+          subscribe: () => window.RAA.local()
         },
         posted: {
-          subscribe: () => window.RAA.send()
+          subscribe: () => window.RAA.local()
         },
-        verbose: () => window.RAA.send()
+        verbose: () => window.RAA.local()
       },
       controllers: {
         defaultController: {
-          subscribe: () => window.RAA.send()
+          subscribe: () => window.RAA.local()
         }
       },
       storage: {
-        getItems: () => window.RAA.send(),
-        setItems: () => window.RAA.send(),
-        removeItem: () => window.RAA.send()
+        getItems: () => window.RAA.local(),
+        setItems: () => window.RAA.local(),
+        removeItem: () => window.RAA.local()
       },
       volume: {
-        getCurrentValue: () => window.RAA.send(),
+        getCurrentValue: () => window.RAA.local(),
         changed: {
-          subscribe: () => window.RAA.send()
+          subscribe: () => window.RAA.local()
         }
       },
       popups: {
-        openLink: () => window.RAA.send()
+        openLink: () => window.RAA.local()
       },
       experimental: {
         query: [],
         popups: {
-          displayCreatorInformationModal: () => window.RAA.send()
+          displayCreatorInformationModal: () => window.RAA.local()
         },
         scoreboards: {
           setRecord: () => window.RAA.send(),
-          display: () => window.RAA.send(),
+          display: () => window.RAA.local(),
           getRecords: () => window.RAA.send()
         },
         screenshot: {
-          displayModal: () => window.RAA.send(),
-          setScreenshotHandler: () => window.RAA.send()
+          displayModal: () => window.RAA.local(),
+          setScreenshotHandler: () => window.RAA.local()
         },
         globalServerVariable: {
           getGlobalServerVariable: () => window.RAA.send(),
@@ -308,7 +312,7 @@
           getUserSignals: () => window.RAA.send()
         },
         interplayer: {
-          enable: () => window.RAA.send()
+          enable: () => window.RAA.local()
         }
       }
     };
