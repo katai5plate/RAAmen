@@ -38,12 +38,15 @@ describe('core', () => {
             expect(error.code).toEqual('BAD_REQUEST');
           });
       });
-      it('client : 通らない送信 > 成功', async () => {
+      it('client : 通らない送信 > BAD_REQUEST', async () => {
         connect({ files });
         const { RAA } = window;
-        return RAA.request({ checkValid: () => true, client: true })
-          .then((res) => { expect(res).toEqual({}); })
-          .catch(() => { fail(); });
+        return RAA.request({ checkValid: () => false, client: true })
+          .then(() => { fail(); })
+          .catch((error) => {
+            expect(error.constructor.name).toEqual('AtsumaruApiError');
+            expect(error.code).toEqual('BAD_REQUEST');
+          });
       });
       it('通常 : 過度な送信 > API_CALL_LIMIT_EXCEEDED', async () => {
         connect({ files });
