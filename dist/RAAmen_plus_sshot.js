@@ -43,7 +43,8 @@
       const openModal = async src => {
         await RAA.modal({
           message: src,
-          decorate: s => `<img src="${s}" />`
+          decorate: s => `<img src="${s}" />`,
+          client: true
         });
       };
 
@@ -54,7 +55,8 @@
       const send = await RAA.request({
         waitTime: RAA.responseTime.normal,
         post: promise,
-        checkValid: p => p instanceof Promise
+        checkValid: p => p instanceof Promise,
+        client: true
       }).then(() => {
         RAA.state.screenshot.handler = promise;
       });

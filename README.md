@@ -35,13 +35,30 @@ https://github.com/katai5plate/RAAmen/tree/master/dist
 |-|-|-|
 ||Promise\<any\>|処理状態|
 
-### RAA.modal({ message, ?decorate, ?checkValid }) => void
+### RAA.clientRequest({?post, ?checkValid, ?succeeded, ?feiled}) => Promise\<any\>
+- Promiseを作成します。
+- APIサーバーへの通信を行わないであろうリクエストに使用します。
+
+|引数|型|初期値|説明|
+|-|-|-|-|
+|(post)|any|{}|送信するデータ|
+|(checkValid)|post => boolean|arg => !!arg|第一引数をpostとして、成否を返す|
+|(succeeded)|any|{}|成功時のレスポンス内容|
+|(feiled)|any|RAA.errors.BAD_REQUEST|失敗時のレスポンス内容|
+
+|返り値|型|説明|
+|-|-|-|
+||Promise\<any\>|処理状態|
+
+### RAA.modal({ message, ?decorate, ?checkValid, ?client }) => void
 - 疑似サーバーにモーダルを開くリクエストを送信します。
 - `message`が疑似サーバーにPOSTされ、`checkValid`が`true`の時、`decorate`の出力結果が適用されます。
+- `client`が`true`の場合、待機時間が`RAA.responseTime.client`になり、そうでない場合は`RAA.responseTime.normal`になります。
 
 |引数|型|初期値|説明|
 |-|-|-|-|
 |message|number||送信する文字列|
 |(decorate)|message => string|arg => arg|第一引数をmesaageとして、<br>リクエスト成功時に適用する文字列を返す|
 |(checkValid)|message => boolean|arg => !!arg|第一引数をmesaageとして、成否を返す|
+|(client)|boolean|false|疑似サーバーに通信せずローカル作業|
 

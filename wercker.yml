@@ -4,16 +4,11 @@ build:
   steps:
     - npm-install
     - script:
-      name: jest
-      code: npm run test
+      name: SPEC TEST
+      code: npm run test -- --silent
     - script:
-      name: build
+      name: BUILD CODES
       code: npm run build
     - script:
-      name: diff
+      name: DIFF CHECK
       code: git diff --exit-code ./dist
-  steps:
-    - npm-install
-    - script:
-      name: ci
-      code: npm run ci

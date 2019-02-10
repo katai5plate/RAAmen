@@ -25,6 +25,7 @@
         await RAA.modal({
           message: src,
           decorate: s => `<img src="${s}" />`,
+          client: true,
         });
       };
       return RAA.state.screenshot.handler
@@ -36,6 +37,7 @@
         waitTime: RAA.responseTime.normal,
         post: promise,
         checkValid: p => p instanceof Promise,
+        client: true,
       })
         .then(() => { RAA.state.screenshot.handler = promise; });
       return send;

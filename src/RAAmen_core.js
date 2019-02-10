@@ -95,7 +95,7 @@
           (resolve) => {
             setTimeout(() => {
               resolve('default.png');
-            }, params.responseTime.normal);
+            }, params.responseTime.client);
           },
         ),
       },
@@ -163,7 +163,7 @@
       }
       return { result: true, error: null };
     },
-    async request({
+    request({
       // レスポンスが返ってくる時間
       waitTime = params.responseTime.normal,
       // 送信するデータ
@@ -194,17 +194,48 @@
         },
       );
     },
-    async modal({ message, decorate = s => s, checkValid = p => !!p } = {}) {
-      if (!message) throw new Error('message is undefined');
-      await this.request({
-        waitTime: this.responseTime.modal,
-        post: message,
-        succeeded: {
-          src: message,
-          deco: decorate(message),
-        },
+    clientRequest({
+      // 送信するデータ
+      post = {},
+      // 第一引数をpostとして、falseだとエラー
+      checkValid = p => !!p,
+      // 成功時のレスポンス
+      succeeded = {},
+      // 失敗時のレスポンス
+      failed = collections.errors.BAD_REQUEST,
+    } = {}) {
+      return this.request({
+        waitTime: params.responseTime.client,
+        post,
         checkValid,
-      })
+        succeeded,
+        failed,
+        client: true,
+      });
+    },
+    async modal({
+      message, decorate = s => s, checkValid = p => !!p, client = false,
+    } = {}) {
+      if (!message) throw new Error('message is undefined');
+      const request = client
+        ? this.clientRequest({
+          post: message,
+          succeeded: {
+            src: message,
+            deco: decorate(message),
+          },
+          checkValid,
+        })
+        : this.request({
+          waitTime: this.responseTime.modal,
+          post: message,
+          succeeded: {
+            src: message,
+            deco: decorate(message),
+          },
+          checkValid,
+        });
+      await request
         .then((r) => {
           console.info(`MODAL: ${r.src}, DECO: ${r.deco}`);
           alert(r.deco);
@@ -217,9 +248,7 @@
   if (window.RAA.isEnable) {
     const callsLocalCompletionAPI = function (...args) {
       console.info('an EMPTY non-communication API was CALLED!', args);
-      return window.RAA.request({
-        client: true, waitTime: params.responseTime.client,
-      });
+      return window.RAA.clientRequest();
     };
     const callsCommunicationAPI = function (...args) {
       console.info('an EMPTY communication API was CALLED!', args);
