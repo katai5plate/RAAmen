@@ -31,7 +31,7 @@ describe('RAA.modal()', () => {
     }
     fail();
   });
-  [undefined, true, false] // 内部処理と待機時間は変わるが、結果は同じになる
+  [undefined, false, true] // 内部処理と待機時間は変わるが、結果は同じになる
     .forEach((client) => {
       describe(`client : ${client}`, () => {
         it('メッセージのみ : 送信 > 成功', async () => {
