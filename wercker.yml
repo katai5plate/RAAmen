@@ -5,7 +5,7 @@ build:
     - npm-install
     - script:
       name: SPEC TEST
-      code: jest --verbose --silent
+      code: npm run test -- --silent
     - script:
       name: BUILD CODES
       code: npm run build
