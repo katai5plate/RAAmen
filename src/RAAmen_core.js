@@ -95,7 +95,7 @@
           (resolve) => {
             setTimeout(() => {
               resolve('default.png');
-            }, params.responseTime.normal);
+            }, params.responseTime.client);
           },
         ),
       },
@@ -194,7 +194,9 @@
         },
       );
     },
-    async modal({ message, decorate = s => s, checkValid = p => !!p } = {}) {
+    async modal({
+      message, decorate = s => s, checkValid = p => !!p, client = false,
+    } = {}) {
       if (!message) throw new Error('message is undefined');
       await this.request({
         waitTime: this.responseTime.modal,
@@ -204,6 +206,7 @@
           deco: decorate(message),
         },
         checkValid,
+        client,
       })
         .then((r) => {
           console.info(`MODAL: ${r.src}, DECO: ${r.deco}`);

@@ -35,7 +35,7 @@ https://github.com/katai5plate/RAAmen/tree/master/dist
 |-|-|-|
 ||Promise\<any\>|処理状態|
 
-### RAA.modal({ message, ?decorate, ?checkValid }) => void
+### RAA.modal({ message, ?decorate, ?checkValid, ?client }) => void
 - 疑似サーバーにモーダルを開くリクエストを送信します。
 - `message`が疑似サーバーにPOSTされ、`checkValid`が`true`の時、`decorate`の出力結果が適用されます。
 
@@ -44,4 +44,5 @@ https://github.com/katai5plate/RAAmen/tree/master/dist
 |message|number||送信する文字列|
 |(decorate)|message => string|arg => arg|第一引数をmesaageとして、<br>リクエスト成功時に適用する文字列を返す|
 |(checkValid)|message => boolean|arg => !!arg|第一引数をmesaageとして、成否を返す|
+|(client)|boolean|false|疑似サーバーに通信せずローカル作業|
 
